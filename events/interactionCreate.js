@@ -29,7 +29,6 @@ client.on('interactionCreate', async interaction => {
 	}
 
 	if (interaction.isButton()) {
-		console.log("Button pressed");
 		switch (interaction.customId.toLowerCase()) {
 			case "agentsdown":
 				let agentsDownPage = parseInt(interaction.message.embeds[0].footer.text.split("/", 1)[0])
