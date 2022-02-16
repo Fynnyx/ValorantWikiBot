@@ -1,1 +1,15 @@
-{}
+{
+    "emojiGuild": "912666151576805427",
+    "events": {
+        "status": {
+            "message": "/help, command to help you"
+        }
+    },
+    "style": {
+        "linebreak": "+-------------------------+",
+        "colors": {
+            "pink": "#fa4454",
+            "darkpink": "#dc3d4b"
+        }
+    }
+}
