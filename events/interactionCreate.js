@@ -41,6 +41,7 @@ client.on('interactionCreate', async interaction => {
 				if (!interaction === undefined) {
 					agentsDownMsg.delete()
 				}
+				break
 
 			case "agentsup":
 				let agentsUpPage = parseInt(interaction.message.embeds[0].footer.text.split("/", 1)[0])
@@ -50,6 +51,7 @@ client.on('interactionCreate', async interaction => {
 					agentsUpMsg = await interaction.reply({ content: "Page Switched", fetchReply: true })
 				}
 				agentsUpMsg.delete()
+				break
 		}
 	}
 	// --> Here you can go on.
