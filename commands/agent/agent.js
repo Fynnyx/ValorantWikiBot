@@ -1,6 +1,19 @@
 const { Client, CommandInteraction, MessageEmbed } = require("discord.js")
 const { writeFile } = require("fs")
+const { getAgents } = require("../../helpers/getDataFromAPI")
 const data = require(`${process.cwd()}/properties.json`)
+
+var agentOptions = []
+getAgents()
+    .then(agentData => {
+        agentData.forEach(agent => {
+            let agentOption = {
+                name: agent.displayName,
+                value: agent.displayName,
+            }
+            agentOptions.push(agentOption)
+        })
+    })
 
 module.exports = {
     name: "agent",
@@ -11,7 +24,8 @@ module.exports = {
             name: "agentname",
             type: "STRING",
             description: "Specify an agent.",
-            required: true
+            required: true,
+            choices: agentOptions,
         }
     ],
 
@@ -22,6 +36,7 @@ module.exports = {
      */
 
     run: async (client, interaction, args) => {
-            
+        console.log(args);
+        interaction.reply("Loading...")
     }
 }
