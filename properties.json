@@ -1,5 +1,12 @@
 {
     "emojiGuild": "912666151576805427",
+    "commands": {
+        "random": {
+            "disabledMaps": [
+                "The Range"
+            ]
+        }
+    },
     "events": {
         "status": {
             "message": "/help, command to help you"
