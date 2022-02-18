@@ -1,15 +1,29 @@
-const axios = require('axios'); 
+const axios = require('axios');
 const { MessageActionRow, MessageButton } = require("discord.js")
 const { getAgents } = require("../helpers/getDataFromAPI")
 const { setTimeout } = require("discord.js")
 
 exports.getAgentsRow = async (page) => {
     const agentData = await getAgents()
+    return await this.generateRow(page, agentData)
+}
+
+exports.getMapsRow = async (page) => {
+    const agentData = await getAgents()
+    return await this.generateRow(page, agentData)
+}
+
+exports.getWeaponsRow = async (page) => {
+    const agentData = await getAgents()
+    return await this.generateRow(page, agentData)
+}
+
+exports.generateRow = async (page, list) => {
 
     if (page === 1) {
         var downdisabled = true
         var updisabled = false
-    } else if (page === agentData.length) {
+    } else if (page === list.length) {
         var downdisabled = false
         var updisabled = true
     } else {

@@ -1,6 +1,6 @@
 const { MessageEmbed } = require("discord.js")
 const { getEmoji } = require("../helpers/getEmoji");
-const { getAgents } = require("../helpers/getDataFromAPI");
+const { getAgents, getMaps } = require("../helpers/getDataFromAPI");
 const data = require(`${process.cwd()}/properties.json`)
 
 exports.getAgentEmbed = async (page) => {
@@ -36,4 +36,18 @@ exports.getAgentEmbed = async (page) => {
         }
     })
     return agentEmbed
+}
+
+exports.getMapEmbed = async (page) => {
+    const mapData = await getMaps()
+    page = page - 1
+    const mapEmbed = new MessageEmbed()
+        .setTitle(`- ${mapData[page].displayName} -`)
+        .setURL(`https://playvalorant.com/en-us/maps/`)
+        .setDescription(`${mapData[page].coordinates}\n\n${data.style.linebreak}`)
+        .setColor(data.style.colors.pink)
+        .setImage(mapData[page].listViewIcon)
+        .setThumbnail(mapData[page].displayIcon)
+        .setFooter({ text: `${page + 1}/${mapData.length}` })
+    return mapEmbed
 }
