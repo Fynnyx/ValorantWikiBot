@@ -31,15 +31,13 @@ client.on('interactionCreate', async interaction => {
 	if (interaction.isButton()) {
 		switch (interaction.customId.toLowerCase()) {
 			case "agentsdown":
-				let agentsDownPage = parseInt(interaction.message.embeds[0].footer.text.split("/", 1)[0])
-				interaction.message.edit({ embeds: [await getAgentEmbed(agentsDownPage - 1)], components: [await getAgentsRow(agentsDownPage - 1)] })
-				var agentsDownMsg
+				let agentsUpPage = parseInt(interaction.message.embeds[0].footer.text.split("/", 1)[0])
+				interaction.message.edit({ embeds: [await getAgentEmbed(agentsUpPage - 1)], components: [await getAgentsRow(agentsUpPage - 1)] })
+				var agentsUpMsg
 				if (!interaction.replied) {
-					agentsDownMsg = await interaction.reply({ content: "Page Switched", fetchReply: true })
+					agentsUpMsg = await interaction.reply({ content: "Page Switched", fetchReply: true })
 				}
-				if (!interaction === undefined) {
-					agentsDownMsg.delete()
-				}
+				agentsUpMsg.delete()
 				break
 
 			case "agentsup":
