@@ -12,5 +12,6 @@ exports.getMaps = async () => {
 }
 
 exports.getWeapons = async () => {
-
+    const response = await axios.get("https://valorant-api.com/v1/weapons", { params: { language: "en-US" } });
+    return response.data.data;
 }
