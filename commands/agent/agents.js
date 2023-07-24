@@ -1,23 +1,21 @@
-const { Client, CommandInteraction, MessageActionRow, MessageButton } = require("discord.js");
-const { getAgentsRow } = require("../../helpers/getActionRow");
-const { getAgentEmbed } = require("../../helpers/getEmbed");
+const { ChatInputCommandInteraction, SlashCommandBuilder } = require('discord.js');
+const { getAgentsRow } = require("../../helper/getActionRow");
+const { getAgentEmbed } = require("../../helper/getEmbed");
 const data = require(`${process.cwd()}/properties.json`)
 
 module.exports = {
-    name: "agents",
-    description: "Get all agents. Click through the agents with buttons.",
-    type: 'CHAT_INPUT',
+    data: new SlashCommandBuilder()
+        .setName('agents')
+        .setDescription('Get all agents. Click through the agents with buttons.'),
     /**
-     *
+     * @param {ChatInputCommandInteraction} interaction
      * @param {Client} client
-     * @param {CommandInteraction} interaction
-     * @param {String[]} args
      */
-    run: async (client, interaction, args) => {
+    async execute(interaction, client) {
         const page = 1
-        const agentEmbed = await getAgentEmbed(page)
+        console.log(client);
+        const agentEmbed = await getAgentEmbed(page, client)
         const row = await getAgentsRow(page)
         interaction.reply({ embeds: [agentEmbed], components: [row] })
-        // await interaction.reply({ content: `Command1 has been triggered.`, ephemeral: true })
     },
 };

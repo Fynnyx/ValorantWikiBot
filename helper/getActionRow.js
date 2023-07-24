@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { MessageActionRow, MessageButton } = require("discord.js")
-const { getAgents } = require("../helpers/getDataFromAPI")
+const { getAgents } = require("../helper/getDataFromAPI")
 const { setTimeout } = require("discord.js")
 
 exports.getAgentsRow = async (page) => {

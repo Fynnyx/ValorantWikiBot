@@ -1,28 +1,26 @@
 {
-  "name": "valorantwikibot",
+  "name": "basicbot-discord-v14",
   "version": "1.0.0",
-  "description": "A Fully Valorant Wiki in a Discord Bot",
+  "description": "discordc bot template for v14",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Fynnyx/ValorantWikiBot.git"
+    "url": "git+https://github.com/Fynnyx/BasicBot-discord.js.git"
   },
   "author": "Fynnyx",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/Fynnyx/ValorantWikiBot/issues"
+    "url": "https://github.com/Fynnyx/BasicBot-discord.js/issues"
   },
-  "homepage": "https://github.com/Fynnyx/ValorantWikiBot#readme",
+  "homepage": "https://github.com/Fynnyx/BasicBot-discord.js#readme",
   "dependencies": {
-    "@discordjs/builders": "^0.12.0",
-    "@discordjs/rest": "^0.3.0",
-    "axios": "^0.25.0",
-    "discord-api-types": "^0.27.1",
-    "discord.js": "^13.6.0",
-    "dotenv": "^15.0.0",
-    "glob": "^7.2.0"
+    "ascii-table3": "^0.8.2",
+    "axios": "^1.4.0",
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3",
+    "glob": "^8.1.0"
   }
 }

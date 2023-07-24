@@ -1,4 +1,6 @@
 {
+    "developer": "451776092785737728",
+    "guildId": "912666151576805427",
     "emojiGuild": "912666151576805427",
     "commands": {
         "random": {
@@ -16,7 +18,14 @@
         "linebreak": "+-------------------------+",
         "colors": {
             "pink": "#fa4454",
-            "darkpink": "#dc3d4b"
+            "red": "#dc3d4b",
+            "winered": "#53212B",
+            "white": "#FFFBF5",
+            "black": "#000000",
+            "green": "#59B716",
+            "orange": "#FB8500",
+            "yellow": "#FFB703",
+            "blue": "#219EBC"
         }
     }
 }

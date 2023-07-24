@@ -1,28 +1,49 @@
-const { Client, CommandInteraction, MessageEmbed } = require("discord.js")
-const data = require(`${process.cwd()}/properties.json`)
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { sendError } = require('../../helper/util/send');
+const { createHelpEmbed } = require('../../helper/util/help');
 
 module.exports = {
-    name: "help",
-    description: "Get help for the diffrent commands and about the bot.",
-    type: 'CHAT_INPUT',
-
+    developer: false,
+    data: new SlashCommandBuilder()
+        .setName('help')
+        .setDescription('Get help with the bot\'s commands!')
+        .setNameLocalizations({
+            'de': 'hilfe'
+        })
+        .addStringOption(option => option
+            .setName('command')
+            .setDescription('The command to get help with.')
+            .setRequired(false)
+        ),
     /**
+     * @param {ChatInputCommandInteraction} interaction
      * @param {Client} client
-     * @param {CommandInteraction} interaction
-     * @param {String[]} args
      */
+    async execute(interaction, client) {
+        await interaction.deferReply();
+        try {
+            const command = interaction.options.getString('command');
+            let embed = new EmbedBuilder()
+                .setColor(client.config.style.colors.blue)
 
-    run: async (client, interaction, args) => {
-        let helpEmbed = new MessageEmbed()
-            .setTitle(`Hilfe für den ${client.user.tag}`)
-            .setDescription(`This Bots uses the Valorant API to get information about the agents, weapons and more.`)
-            .setColor(data.style.colors.darkpink)
-            .setTimestamp()
-            .setFooter("By Fynnyx | github.com/Fynnyx")
-            
-            client.slashCommands.map(value => {
-                helpEmbed.addField(value.name, value.description, true)
-            })
-        
-        await interaction.reply({ embeds: [helpEmbed] })    }
+            if (command) {
+                const cmd = client.commands.get(command);
+                if (!cmd) return sendError('Error', 'That command doesn\'t exist!', interaction, client);
+                embed = await createHelpEmbed(client, cmd)
+            } else {
+                embed.setTitle('VALORANT Wiki Bot Help');
+                embed.setDescription('Here are all the commands you can use!');
+                for (const command of client.commands) {
+                    embed.addFields(
+                        { name: command[1].data.name, value: command[1].data.description, inline: true }
+                    );
+                }
+            }
+            interaction.editReply({ embeds: [embed] });
+
+        }
+        catch (error) {
+            sendError('Error', error, interaction, client);
+        }
+    }
 }

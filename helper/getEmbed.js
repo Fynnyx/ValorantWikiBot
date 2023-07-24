@@ -1,16 +1,16 @@
-const { MessageEmbed } = require("discord.js")
-const { getEmoji } = require("../helpers/getEmoji");
-const { getAgents, getMaps } = require("../helpers/getDataFromAPI");
+const { EmbedBuilder } = require("discord.js")
+const { getEmoji } = require("../helper/getEmoji");
+const { getAgents, getMaps } = require("../helper/getDataFromAPI");
 const data = require(`${process.cwd()}/properties.json`)
 
-exports.getAgentEmbed = async (page) => {
+exports.getAgentEmbed = async (page, client) => {
     const agentData = await getAgents()
     page = page - 1
-    const agentEmbed = new MessageEmbed()
+    const agentEmbed = new EmbedBuilder()
         .setTitle(`- ${agentData[page].displayName} -`)
         .setURL(`https://playvalorant.com/en-us/agents/${agentData[page].displayName.toLowerCase()}/`)
         .setDescription(`${agentData[page].description}\n\n${data.style.linebreak}`)
-        .setColor(data.style.colors.pink)
+        .setColor(data.style.style.colors.pink)
         .setThumbnail(agentData[page].displayIcon)
         .setImage(agentData[page].killfeedPortrait)
         .setFooter({ text: `${page + 1}/${agentData.length}` })
@@ -21,7 +21,7 @@ exports.getAgentEmbed = async (page) => {
     agentData[page].abilities.forEach(async ability => {
         switch (ability.slot.toLowerCase()) {
             case "grenade":
-                agentEmbed.addField(`- ${await getEmoji(agentData[page].displayName.toLowerCase() + "grenade")} ${ability.displayName} -`, ability.description, true)
+                agentEmbed.addField(`- ${await getEmoji(agentData[page].displayName.toLowerCase() + "grenade", client)} ${ability.displayName} -`, ability.description, true)
                 break
             case "ability1":
                 agentEmbed.addField(`- ${await getEmoji(agentData[page].displayName.toLowerCase() + "ability1")} ${ability.displayName} -`, ability.description, true)
@@ -45,7 +45,7 @@ exports.getMapEmbed = async (page) => {
         .setTitle(`- ${mapData[page].displayName} -`)
         .setURL(`https://playvalorant.com/en-us/maps/`)
         .setDescription(`${mapData[page].coordinates}\n\n${data.style.linebreak}`)
-        .setColor(data.style.colors.pink)
+        .setColor(data.style.style.colors.pink)
         .setImage(mapData[page].listViewIcon)
         .setThumbnail(mapData[page].displayIcon)
         .setFooter({ text: `${page + 1}/${mapData.length}` })

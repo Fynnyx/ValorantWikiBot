@@ -1,54 +1,48 @@
-const { Client, CommandInteraction, MessageEmbed } = require("discord.js")
-const { getMaps, getAgents } = require("../../helpers/getDataFromAPI")
-const { getMapEmbed, getAgentEmbed } = require("../../helpers/getEmbed")
+const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js")
+const { getMaps, getAgents } = require("../../helper/getDataFromAPI")
+const { getMapEmbed, getAgentEmbed } = require("../../helper/getEmbed")
 const data = require(`${process.cwd()}/properties.json`)
 
 module.exports = {
-    name: "random",
-    description: "Get a random map, agent or weapon.",
-    type: 'CHAT_INPUT',
-    options: [
-        {
-            name: "map",
-            type: "SUB_COMMAND",
-            description: "Get a random map.",
-        },
-        {
-            name: "agent",
-            type: "SUB_COMMAND",
-            description: "Get a random agent.",
-            options: [
-                {
-                    name: "role",
-                    type: "STRING",
-                    description: "Specify a role.",
-                    required: false,
-                    choices: [
-                        { name: "Duelist", value: "Duelist" },
-                        { name: "Controller", value: "Controller" },
-                        { name: "Initiator", value: "Initiator" },
-                        { name: "Sentinel", value: "Sentinel" },
-                    ]
-                }
-            ]
-        },
-        {
-            name: "weapon",
-            type: "SUB_COMMAND",
-            description: "Get a random weapon.",
-        }
-    ],
+    data: new SlashCommandBuilder()
+        .setName("random")
+        .setDescription("Get a random map, agent or weapon.")
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName("map")
+                .setDescription("Get a random map.")
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName("agent")
+                .setDescription("Get a random agent.")
+                .addStringOption(option =>
+                    option
+                        .setName("role")
+                        .setDescription("Specify a role.")
+                        .setRequired(false)
+                        .addChoices(
+                            { name: "Duelist", value: "Duelist" },
+                            { name: "Initiator", value: "Initiator" },
+                            { name: "Controller", value: "Controller" },
+                            { name: "Sentinel", value: "Sentinel" },
+                        )
 
-
+                )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName("weapon")
+                .setDescription("Get a random weapon.")
+        ),
 
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction
-     * @param {String[]} args
      */
 
-    run: async (client, interaction, args) => {
-        switch (args[0].toLowerCase()) {
+    async execute(interaction, client) {
+        switch (interaction.options.getSubcommand()) {
             case "map":
                 const mapData = await getMaps()
                 var mapIndex = Math.floor(Math.random() * mapData.length)

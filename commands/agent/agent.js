@@ -1,27 +1,16 @@
-const { Client, CommandInteraction, MessageEmbed } = require("discord.js")
+const { ChatInputCommandInteraction, SlashCommandBuilder } = require('discord.js');
 const { writeFile } = require("fs")
 const data = require(`${process.cwd()}/properties.json`)
 
 module.exports = {
-    name: "agent",
-    description: "Send you all information about the defined agent",
-    type: 'CHAT_INPUT',
-    options: [
-        {
-            name: "agentname",
-            type: "STRING",
-            description: "Specify an agent.",
-            required: true
-        }
-    ],
+    data: new SlashCommandBuilder()
+        .setName('agent')
+        .setDescription('Send you all information about the defined agent')
+        .addStringOption(option => option.setName('agentname').setDescription('Specify an agent.').setRequired(true)),
 
     /**
+     * @param {ChatInputCommandInteraction} interaction
      * @param {Client} client
-     * @param {CommandInteraction} interaction
-     * @param {String[]} args
      */
-
-    run: async (client, interaction, args) => {
-            
-    }
+    async execute(interaction, client) {}
 }
