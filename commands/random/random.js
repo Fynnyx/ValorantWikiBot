@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js")
-const { getMaps, getAgents } = require("../../helper/getDataFromAPI")
+const { getMaps, getAgents, getWeapons } = require("../../helper/getDataFromAPI")
 const { getMapEmbed, getAgentEmbed } = require("../../helper/getEmbed")
-const data = require(`${process.cwd()}/properties.json`)
+const { filterTDMMaps } = require("../../helper/map/mapHelper")
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -11,6 +11,12 @@ module.exports = {
             subcommand
                 .setName("map")
                 .setDescription("Get a random map.")
+                .addBooleanOption(option =>
+                    option
+                        .setName("include-tdm")
+                        .setDescription("Include Team Deathmatch maps.")
+                        .setRequired(false)
+                )
         )
         .addSubcommand(subcommand =>
             subcommand
@@ -44,14 +50,19 @@ module.exports = {
     async execute(interaction, client) {
         switch (interaction.options.getSubcommand()) {
             case "map":
-                const mapData = await getMaps()
+                const includeTDM = interaction.options.getBoolean("include-tdm")
+                let mapData = await getMaps()
+                const allMaps = mapData
+                if (includeTDM === false) {
+                    mapData = await filterTDMMaps(client, mapData)
+                }
                 var mapIndex = Math.floor(Math.random() * mapData.length)
                 var map = mapData[mapIndex]
-                while (data.commands.random.disabledMaps.includes(map.displayName)) {
+                while (client.config.commands.random.disabledMaps.includes(map.displayName)) {
                     mapIndex = Math.floor(Math.random() * mapData.length)
                     map = mapData[mapIndex]
                 }
-                const mapEmbed = await getMapEmbed(mapIndex)
+                const mapEmbed = await getMapEmbed(allMaps.indexOf(map) + 1, client)
                 interaction.reply({ embeds: [mapEmbed] })
                 break;
 
@@ -65,12 +76,14 @@ module.exports = {
                         agent = agentData[agentIndex]
                     }
                 }
-                const agentEmbed = await getAgentEmbed(agentIndex + 1)
+                const agentEmbed = await getAgentEmbed(agentIndex + 1, client)
                 interaction.reply({ embeds: [agentEmbed] })
                 break;
 
             case "weapon":
-
+                const weaponData = await getWeapons()
+                var weaponIndex = Math.floor(Math.random() * weaponData.length)
+                var weapon = weaponData[weaponIndex]
                 break;
 
             default:

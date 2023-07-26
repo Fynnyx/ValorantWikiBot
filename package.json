@@ -4,7 +4,9 @@
   "description": "discordc bot template for v14",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +21,7 @@
   "dependencies": {
     "ascii-table3": "^0.8.2",
     "axios": "^1.4.0",
-    "discord.js": "^14.7.1",
+    "discord.js": "^14.10.2",
     "dotenv": "^16.0.3",
     "glob": "^8.1.0"
   }

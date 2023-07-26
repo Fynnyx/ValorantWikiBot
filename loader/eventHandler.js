@@ -9,7 +9,6 @@ async function loadEvents(client) {
     await client.events.clear();
 
     const files = await loadFiles('events');
-    console.log(files);
     for (const file of files) {
         try {
             const event = require(file);
