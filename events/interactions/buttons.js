@@ -38,14 +38,14 @@ module.exports = {
                             let downSkinChromaPage = parseInt(downMessage[2].split("/", 1)[0]);
 
                             if (isSkin) {
-                                downEmbed = await getWeaponEmbed(downPage, downSkinPage - 1, downSkinChromaPage, client);
-                                downRow = await getWeaponsRow(downPage, downSkinPage - 1, downSkinChromaPage, client);
+                                downEmbed = await getWeaponEmbed(downPage, downSkinPage - 1, 0, client);
+                                downRow = await getWeaponsRow(downPage, downSkinPage - 1, 0);
                             } else if (isChroma) {
                                 downEmbed = await getWeaponEmbed(downPage, downSkinPage, downSkinChromaPage - 1, client);
-                                downRow = await getWeaponsRow(downPage, downSkinPage, downSkinChromaPage - 1, client);
+                                downRow = await getWeaponsRow(downPage, downSkinPage, downSkinChromaPage - 1);
                             } else {
-                                downEmbed = await getWeaponEmbed(downPage - 1, 1, client);
-                                downRow = await getWeaponsRow(downPage - 1, 1);
+                                downEmbed = await getWeaponEmbed(downPage - 1, 1, 0, client);
+                                downRow = await getWeaponsRow(downPage - 1, 1, 0);
                             }
 
                             interaction.message.edit({ embeds: [downEmbed], components: downRow });
@@ -89,15 +89,15 @@ module.exports = {
                             let upSkinChromaPage = parseInt(upMessage[2].split("/", 1)[0]);
 
                             if (isSkin) {
-                                upEmbed = await getWeaponEmbed(upPage, upSkinPage + 1, 1, client);
-                                upRow = await getWeaponsRow(upPage, upSkinPage + 1, 1, client);
+                                upEmbed = await getWeaponEmbed(upPage, upSkinPage + 1, 0, client);
+                                upRow = await getWeaponsRow(upPage, upSkinPage + 1, 0, client);
                             } else if (isChroma) {
                                 upEmbed = await getWeaponEmbed(upPage, upSkinPage, upSkinChromaPage + 1, client);
                                 upRow = await getWeaponsRow(upPage, upSkinPage, upSkinChromaPage + 1, client);
                             }
                             else {
-                                upEmbed = await getWeaponEmbed(upPage + 1, 1, 1, client);
-                                upRow = await getWeaponsRow(upPage + 1, 1, 1);
+                                upEmbed = await getWeaponEmbed(upPage + 1, 1, 0, client);
+                                upRow = await getWeaponsRow(upPage + 1, 1, 0);
                             }
 
                             interaction.message.edit({ embeds: [upEmbed], components: upRow });

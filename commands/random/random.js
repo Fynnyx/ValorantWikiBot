@@ -1,6 +1,6 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js")
 const { getMaps, getAgents, getWeapons } = require("../../helper/getDataFromAPI")
-const { getMapEmbed, getAgentEmbed } = require("../../helper/getEmbed")
+const { getMapEmbed, getAgentEmbed, getWeaponEmbed } = require("../../helper/getEmbed")
 const { filterTDMMaps } = require("../../helper/map/mapHelper")
 
 module.exports = {
@@ -40,6 +40,18 @@ module.exports = {
             subcommand
                 .setName("weapon")
                 .setDescription("Get a random weapon.")
+                .addBooleanOption(option =>
+                    option
+                        .setName("include-melee")
+                        .setDescription("Include the knife as weapon.")
+                        .setRequired(false)
+                )
+                .addNumberOption(option =>
+                    option
+                        .setName("max-credits")
+                        .setDescription("Specify the maximum credits.")
+                        .setRequired(false)
+                )
         ),
 
     /**
@@ -81,9 +93,21 @@ module.exports = {
                 break;
 
             case "weapon":
+                const includeMelee = interaction.options.getBoolean("include-melee")
+                const maxCredits = interaction.options.getNumber("max-credits")
                 const weaponData = await getWeapons()
                 var weaponIndex = Math.floor(Math.random() * weaponData.length)
                 var weapon = weaponData[weaponIndex]
+                if (includeMelee === false) {
+                    weaponData.splice(weaponData.findIndex(weapon => weapon.displayName === "Melee"), 1)
+                }
+                if (maxCredits !== undefined) {
+                    weaponData.splice(weaponData.findIndex(weapon => weapon.shopData.cost > maxCredits), 1)
+                }
+                weaponIndex = Math.floor(Math.random() * weaponData.length)
+                weapon = weaponData[weaponIndex]
+                const weaponEmbed = getWeaponEmbed(weaponIndex + 1, 1, 0, client)
+                interaction.reply({ embeds: [weaponEmbed] })
                 break;
 
             default:

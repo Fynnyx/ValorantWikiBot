@@ -11,6 +11,8 @@ function getWeaponStatTypeString(string) {
         value: value
     }
     switch(type) {
+        case 'EEquippableCategory':
+            returnObject.type = 'Category'
         case 'EWallPenetrationDisplayType':
             returnObject.type = 'Wall Penetration'
         case 'EWeaponStatsFeature':

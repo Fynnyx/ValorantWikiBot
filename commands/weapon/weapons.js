@@ -13,7 +13,7 @@ module.exports = {
     async execute(interaction, client) {
         const page = 1
         const skinpage = 1
-        const chromapage = 1
+        const chromapage = 0
         const weaponEmbed = await getWeaponEmbed(page, skinpage, chromapage, client);
         const [weaponRow, skinRow] = await getWeaponsRow(page, skinpage, client);
         interaction.reply({ embeds: [weaponEmbed], components: [weaponRow, skinRow] })

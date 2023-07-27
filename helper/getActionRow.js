@@ -48,7 +48,7 @@ exports.getWeaponsRow = async (page, skinpage, chromapage) => {
     if (list.length <= 1) {
         var downdisabled = true
         var updisabled = true
-    } else if (chromapage === 1) {
+    } else if (chromapage === 0 || (chromapage === 1 && list.length === 1)) {
         var downdisabled = true
         var updisabled = false
     } else if (chromapage === list.length) {
